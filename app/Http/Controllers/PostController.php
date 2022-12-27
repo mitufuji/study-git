@@ -14,9 +14,11 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Post $post)
+    public function index()
     {
-        $posts = Auth::user()->posts;
+        $posts = Post::all();
+
+        logger($posts);
 
         return view('posts.index', compact('posts'));
     }
@@ -42,11 +44,11 @@ class PostController extends Controller
         $request->validate([
             'content' => 'required',
         ]);
-        logger('f');
+        
         $post = new Post();
         $post->content = $request->input('content');
         $post->user_id = Auth::id();        
-        // $post->user_name = Auth::name();
+        $post->user_name = Auth::user()->name;
         $post->save();
         
         
