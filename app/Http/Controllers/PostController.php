@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,13 +15,12 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::all();
-
-        // logger($posts);
-
-        return view('posts.index', compact('posts'));
+        $categories = Category::all();
+        
+          
+        return view('posts.index', compact('categories'));
     }
 
     /**
@@ -48,11 +48,15 @@ class PostController extends Controller
         $post = new Post();
         $post->content = $request->input('content');
         $post->user_id = Auth::id();        
+        $post->category_id = $request->input('category_id');        
         $post->user_name = Auth::user()->name;
         $post->save();
-        
-        
-        return redirect()->route('posts.index');
+
+        $return_id = $post->category_id;
+        $category = Category::find($return_id);
+        // $category_choice = Category::where('id', $post->category_id)->get();
+        // logger($category_choice);
+        return redirect()->route('posts.show', ['category' => $category]);
     }
 
     /**
@@ -61,9 +65,12 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Category $category)
     {
-        //
+        $posts = Post::where('category_id', $category->id)->get();
+        $categories = Category::all();
+        // logger($posts);
+      return view('posts.show', compact('category', 'posts', 'categories'));
     }
 
     /**

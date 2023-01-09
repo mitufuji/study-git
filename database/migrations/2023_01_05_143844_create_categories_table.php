@@ -13,21 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->text('content');
-            $table->unsignedBigInteger('user_id');
-            $table->integer('category_id');            
-            $table->string('user_name');
+            $table->string('name');
             $table->timestamps();
         });
-
-        Schema::table('posts', function (Blueprint $table) {
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users');
-        });
     }
+
+
+    // Schema::table('message_reactions', function (Blueprint $table) {
+        
+    // });
 
     /**
      * Reverse the migrations.
@@ -36,9 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('categories');
     }
 };
-
-
-
