@@ -18,8 +18,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $categories = Category::all();
-        
-          
+                  
         return view('posts.index', compact('categories'));
     }
 
@@ -70,7 +69,7 @@ class PostController extends Controller
         $posts = Post::where('category_id', $category->id)->get();
         $categories = Category::all();
         // logger($posts);
-      return view('posts.show', compact('category', 'posts', 'categories'));
+        return view('posts.show', compact('category', 'posts', 'categories'));
     }
 
     /**

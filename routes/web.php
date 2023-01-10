@@ -14,13 +14,13 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::get('/', [PostController::class, 'index'])->name('posts.index')->middleware('auth');
+// Route::get('/', [PostController::class, 'index'])->name('posts.index')->middleware('auth');
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::get('/posts', [PostController::class, 'index'])->name('posts.index')->middleware('auth');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index')->middleware('auth');
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 Route::get('/posts/{category}', [PostController::class, 'show'])->name('posts.show')->middleware('auth');
 
