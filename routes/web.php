@@ -14,7 +14,7 @@ use App\Http\Controllers\PostController;
 |
 */
 
-// Route::get('/', [PostController::class, 'index'])->name('posts.index')->middleware('auth');
+Route::get('/', [PostController::class, 'index'])->name('posts.index')->middleware('auth');
 
 Auth::routes();
 
